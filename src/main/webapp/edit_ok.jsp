@@ -1,16 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 임재성
-  Date: 2022-11-20
-  Time: 오전 5:15
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ page import="com.member.dao.MemberDAO"%>
+<%@ page import="com.member.bean.MemberVO"%>
+<%@ page import="com.member.common.FileUpload"%>
+<%
+    request.setCharacterEncoding("utf-8");
+    MemberDAO memberDAO = new MemberDAO();
+    FileUpload upload = new FileUpload();
+    MemberVO u = upload.uploadPhoto(request);
+
+    int i = memberDAO.updateMember(u);
+    String msg = "데이터 수정 성공 !";
+    if(i == 0) msg = "[에러] 데이터 수정 실패 ! ";
+%>
+
+<script>
+    alert('<%=msg%>');
+    location.href='lists.jsp';
+</script>
